@@ -30,6 +30,9 @@ class Circle {
     this.speed = speed;
     this.dx = 1 * this.speed;
     this.dy = 1 * this.speed;
+    
+    // Temporizador para el efecto visual de rebote
+    this.bounceTimer = 0; 
   }
 
   draw(context) {
@@ -39,11 +42,22 @@ class Circle {
     context.fill();
 
     context.lineWidth = 2;
-    context.strokeStyle = this.colorSolid;
-    context.shadowColor = this.colorSolid;
-    context.shadowBlur = 10; 
+    
+    // Si acaba de rebotar, aplicamos el efecto visual (brillo blanco intenso)
+    if (this.bounceTimer > 0) {
+        context.strokeStyle = "white";
+        context.shadowColor = "white";
+        context.shadowBlur = 20; 
+        this.bounceTimer--; // Reducimos el temporizador en cada fotograma
+    } else {
+        // Estado normal (Glassmorphism)
+        context.strokeStyle = this.colorSolid;
+        context.shadowColor = this.colorSolid;
+        context.shadowBlur = 10; 
+    }
+    
     context.stroke();
-    context.shadowBlur = 0;
+    context.shadowBlur = 0; // Resetear para el texto
 
     context.fillStyle = "white"; 
     context.textAlign = "center";
@@ -56,22 +70,43 @@ class Circle {
   update(context) {
     this.draw(context);
 
-    // Rebote dinámico: Si el canvas se encoge, empuja al círculo hacia adentro
+    let bounced = false; // Bandera para saber si chocó en este fotograma
+
+    // Rebote dinámico con los bordes
     if (this.posX + this.radius > canvas_width) {
-      this.dx = -Math.abs(this.dx); // Fuerza dirección izquierda
+      this.dx = -Math.abs(this.dx); 
       this.posX = canvas_width - this.radius;
+      bounced = true;
     }
     if (this.posX - this.radius < 0) {
-      this.dx = Math.abs(this.dx); // Fuerza dirección derecha
+      this.dx = Math.abs(this.dx); 
       this.posX = this.radius;
+      bounced = true;
     }
     if (this.posY + this.radius > canvas_height) {
-      this.dy = -Math.abs(this.dy); // Fuerza dirección arriba
+      this.dy = -Math.abs(this.dy); 
       this.posY = canvas_height - this.radius;
+      bounced = true;
     }
     if (this.posY - this.radius < 0) {
-      this.dy = Math.abs(this.dy); // Fuerza dirección abajo
+      this.dy = Math.abs(this.dy); 
       this.posY = this.radius;
+      bounced = true;
+    }
+
+    // --- EFECTO DE REBOTE ALEATORIO ---
+    if (bounced) {
+        this.bounceTimer = 15; // El destello blanco durará 15 fotogramas
+        
+        // Multiplicador aleatorio entre 0.8 y 1.2 para alterar la velocidad
+        let randomFactor = (Math.random() * 0.4) + 0.8;
+        
+        let newDx = this.dx * randomFactor;
+        let newDy = this.dy * randomFactor;
+        
+        // Aplicamos la nueva velocidad aleatoria solo si no se vuelve demasiado rápido ni se detiene por completo
+        if (Math.abs(newDx) > 1 && Math.abs(newDx) < 12) this.dx = newDx;
+        if (Math.abs(newDy) > 1 && Math.abs(newDy) < 12) this.dy = newDy;
     }
 
     this.posX += this.dx;
@@ -79,10 +114,8 @@ class Circle {
   }
 }
 
-// Función auxiliar para crear un círculo nuevo
 function crearCirculoAleatorio(indice) {
     let randomRadius = Math.floor(Math.random() * 50 + 30); 
-    // Aseguramos que nazca dentro de las dimensiones actuales
     let randomX = Math.random() * (canvas_width - randomRadius * 2) + randomRadius;
     let randomY = Math.random() * (canvas_height - randomRadius * 2) + randomRadius;
     let r = Math.floor(Math.random() * 255);
@@ -93,7 +126,6 @@ function crearCirculoAleatorio(indice) {
     return new Circle(randomX, randomY, randomRadius, r, g, b, indice, randomVel);
 }
 
-// Inicialización (se ejecuta solo al cargar la página)
 function init() {
   canvas.width = canvas_width;
   canvas.height = canvas_height;
@@ -107,8 +139,6 @@ function init() {
 }
 
 /* // --- TUS CÍRCULOS DE PRUEBA ORIGINALES COMENTADOS ---
-// (Adaptados para usar r, g, b en lugar de colores en string)
-
 // Primero calculamos el radio
 let randomRadiusTest = Math.floor(Math.random() * 100 + 30);
 
@@ -125,7 +155,6 @@ let miCirculo2 = new Circle(randomXTest, randomYTest, randomRadiusTest, 255, 0, 
 // miCirculo2.draw(ctx);
 */
 
-// Bucle de animación
 let updateCircle = function () {
   animationFrameId = requestAnimationFrame(updateCircle);
   ctx.clearRect(0, 0, canvas_width, canvas_height);
@@ -142,7 +171,6 @@ let updateCircle = function () {
 
 /* --- EVENT LISTENERS PARA LAS BARRAS (SLIDERS) --- */
 
-// 1. Cambiar cantidad de círculos en tiempo real
 inputNumCircles.addEventListener('input', (e) => {
     let nuevoNumero = parseInt(e.target.value);
     valCircles.textContent = nuevoNumero; 
@@ -158,19 +186,16 @@ inputNumCircles.addEventListener('input', (e) => {
     }
 });
 
-// 2. Cambiar ancho del canvas en tiempo real
 inputWidth.addEventListener('input', (e) => {
     canvas_width = parseInt(e.target.value);
     valWidth.textContent = canvas_width;
     canvas.width = canvas_width; 
 });
 
-// 3. Cambiar alto del canvas en tiempo real
 inputHeight.addEventListener('input', (e) => {
     canvas_height = parseInt(e.target.value);
     valHeight.textContent = canvas_height;
     canvas.height = canvas_height; 
 });
 
-// Iniciar
 window.onload = init;
