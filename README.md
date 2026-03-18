@@ -35,17 +35,20 @@ Este proyecto fue desarrollado utilizando el siguiente stack tecnológico:
 
 ## 📂 Estructura del Proyecto
 
+## 📂 Estructura del Proyecto
+
+```text
 📁 animation-canvas-2d/
-├── 📄 index.html            # Estructura principal e interfaz de usuario
-├── 📄 README.md             # Documentación del proyecto
+├── 📄 index.html        # Estructura principal e interfaz de usuario
+├── 📄 README.md         # Documentación del proyecto
 └── 📁 assets/
     ├── 📁 css/
-    │   └── 📄 style.css     # Estilos personalizados y Glassmorphism
+    │   └── 📄 style.css # Estilos personalizados y Glassmorphism
     ├── 📁 img/
-    │   │── 🖼️ img.jpg       # Imagen de fondo local
-    │   └── 🖼️ favicon.jpg   # Imagen de icono del proyecto
+    │   ├── 🖼️ img.jpg   # Imagen de fondo local
+    │   └── 🖼️ favicon.jpg # Imagen de icono del proyecto
     └── 📁 js/
-        └── 📄 main.js       # Motor de físicas, clase Circle y lógica de animación
+        └── 📄 main.js   # Motor de físicas, clase Circle y lógica de animación
 
 ---
 
