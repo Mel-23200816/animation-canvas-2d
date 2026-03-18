@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Bouncing Glass</a>
             <span class="navbar-text text-white">
-                Simulador de Físicas 2D
+                Físicas de Gravedad y Rebote
             </span>
         </div>
     </nav>
@@ -22,30 +22,43 @@
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card glass-card p-4">
-                    <h4 class="text-white mb-4">Controles Interactivos</h4>
+                    <h4 class="text-white mb-4">Controles de Física</h4>
                     
                     <div class="mb-4">
                         <label for="numCircles" class="form-label text-white fw-bold">
-                            Círculos: <span id="valCircles" class="badge bg-light text-dark">15</span>
+                            Pelotas a lanzar: <span id="valCircles" class="badge bg-light text-dark">15</span>
                         </label>
                         <input type="range" class="form-range" id="numCircles" value="15" min="1" max="100">
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label for="canvasWidth" class="form-label text-white fw-bold">
                             Ancho: <span id="valWidth" class="badge bg-light text-dark">800</span> px
                         </label>
                         <input type="range" class="form-range" id="canvasWidth" value="800" min="300" max="1200" step="10">
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label for="canvasHeight" class="form-label text-white fw-bold">
                             Alto: <span id="valHeight" class="badge bg-light text-dark">500</span> px
                         </label>
                         <input type="range" class="form-range" id="canvasHeight" value="500" min="300" max="800" step="10">
                     </div>
-                    
+
+                    <div class="mb-4">
+                        <label for="spawnOrigin" class="form-label text-white fw-bold">Efecto de Lanzamiento</label>
+                        <select class="form-select glass-input text-dark" id="spawnOrigin">
+                            <option value="top-left">Desde Arriba a la Izquierda</option>
+                            <option value="top-right">Desde Arriba a la Derecha</option>
+                            <option value="bottom-left">Desde Abajo a la Izquierda</option>
+                            <option value="bottom-right">Desde Abajo a la Derecha</option>
+                            <option value="top">Soltar desde Arriba (Centro)</option>
+                            <option value="bottom">Disparar desde Abajo (Centro)</option>
+                        </select>
                     </div>
+
+                    <button id="btnThrow" class="btn btn-light w-100 fw-bold fs-5">🚀 Lanzar Pelotas</button>
+                </div>
             </div>
 
             <div class="col-md-8 d-flex justify-content-center align-items-center">
