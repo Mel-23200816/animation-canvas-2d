@@ -31,9 +31,15 @@ Este proyecto fue desarrollado utilizando el siguiente stack tecnológico:
 * 🟥 **HTML:** 25% (Estructura de la aplicación, controles UI)
 * 🟦 **CSS:** 15% (Efectos Glassmorphism, fondos y ajustes visuales)
 
+
 ---
 
-## 📂 Estructura del Proyecto
+## 👨‍💻 Autor
+
+**Miguel Angel Cano Alejandro**
+Estudiante de 6to Semestre | Instituto Tecnológico de Pachuca
+
+---
 
 ## 📂 Estructura del Proyecto
 
@@ -49,10 +55,3 @@ Este proyecto fue desarrollado utilizando el siguiente stack tecnológico:
     │   └── 🖼️ favicon.jpg # Imagen de icono del proyecto
     └── 📁 js/
         └── 📄 main.js   # Motor de físicas, clase Circle y lógica de animación
-
----
-
-## 👨‍💻 Autor
-
-**Miguel Angel Cano Alejandro**
-Estudiante de 6to Semestre | Instituto Tecnológico de Pachuca
