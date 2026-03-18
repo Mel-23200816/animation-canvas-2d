@@ -2,8 +2,8 @@ const canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
 //Obtiene las dimensiones de la pantalla actual
-const window_height = window.innerHeight;
-const window_width = window.innerWidth;
+const window_height = window.innerHeight * 0.5;
+const window_width = window.innerWidth * 0.5;
 
 //El canvas tiene las mismas dimensiones que la pantalla
 canvas.height = window_height;
@@ -48,21 +48,25 @@ class Circle {
     //Si el círculo supera el margen derecho entonces se mueve a la izquierda
     if (this.posX + this.radius > window_width) {
       this.dx = -this.dx;
+      this.posX = window_width - this.radius; // Corrección para que no se quede pegado
     }
 
     //Si el círculo supera el margen izquierdo entonces se mueve a la derecha
     if (this.posX - this.radius < 0) {
       this.dx = -this.dx;
+      this.posX = this.radius; // Corrección para que no se quede pegado
     }
 
     //Si el círculo supera el margen superior entonces se mueve hacia abajo
     if (this.posY - this.radius < 0) {
       this.dy = -this.dy;
+      this.posY = this.radius; // Corrección para que no se quede pegado
     }
 
     //Si el círculo supera el margen inferior entonces se mueve hacia arriba
     if (this.posY + this.radius > window_height) {
       this.dy = -this.dy;
+      this.posY = window_height - this.radius; // Corrección para que no se quede pegado
     }
 
     this.posX += this.dx;
@@ -74,20 +78,25 @@ class Circle {
 
 for(let i=0; i<10;i++){
 
-    let randomX =  Math.random()* window_width;
-    let randomY =  Math.random()* window_height;
     let randomRadius = Math.floor(Math.random()*100 + 30);
+    // Coordenadas corregidas para que nazcan dentro del canvas
+    let randomX = Math.random() * (window_width - randomRadius * 2) + randomRadius;
+    let randomY = Math.random() * (window_height - randomRadius * 2) + randomRadius;
 
-    let miCirculo = new Circle(randomX, randomY, randomRadius, 'blue', i+1);
+    // Se añadió un valor de velocidad (ej. 2) al final para coincidir con el constructor
+    let miCirculo = new Circle(randomX, randomY, randomRadius, 'blue', i+1, 2);
 
     //Agrega el objeto al array
     arrayCircle.push(miCirculo);
     arrayCircle[i].draw(ctx);
 } */
 
-let randomX = Math.random() * window_width;
-let randomY = Math.random() * window_height;
+// Primero calculamos el radio
 let randomRadius = Math.floor(Math.random() * 100 + 30);
+
+// Luego calculamos X e Y asegurando que el centro esté al menos a una distancia "randomRadius" de cualquier borde
+let randomX = Math.random() * (window_width - randomRadius * 2) + randomRadius;
+let randomY = Math.random() * (window_height - randomRadius * 2) + randomRadius;
 
 let miCirculo = new Circle(randomX, randomY, randomRadius, "blue", "Tec1", 5);
 miCirculo.draw(ctx);
@@ -103,4 +112,3 @@ let updateCircle = function () {
 };
 
 updateCircle();
-
